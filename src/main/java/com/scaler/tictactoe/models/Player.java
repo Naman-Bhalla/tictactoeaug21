@@ -12,6 +12,10 @@ public abstract class Player {
     public PlayerType getPlayerType() {
         return playerType;
     }
+
+    public Symbol getSymbol() {
+        return symbol;
+    }
 }
 
 // StartGame

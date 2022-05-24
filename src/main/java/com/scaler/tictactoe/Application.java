@@ -13,18 +13,18 @@ public class Application {
     private static GameController gameController = new GameController();
 
     public static void main(String[] args) {
-        List<Player> players1 = List.of(
-                PlayerFactory.getHuman(new Symbol('X'), new User()),
-                PlayerFactory.getBot(new Symbol('0'), new RandomBotPlayingStrategy())
-        );
+        Player humanPlayer = PlayerFactory.getHuman(new Symbol('X'), new User());
+        Player botPlayer = PlayerFactory.getBot(new Symbol('0'), new RandomBotPlayingStrategy());
+        List<Player> players1 = List.of( humanPlayer, botPlayer );
 
         List<GameWinningStrategy> gameWinningStrategies1 = List.of(
-                new OrderOneGameWinningStrategy()
+                new OrderOneGameWinningStrategy(players1.size())
         );
 
         Game game1 = gameController.createGame(3, players1, gameWinningStrategies1);
 
-        gameController.makeMove(game1, new Move());
+        gameController.makeMove(game1, new Move(0,0, humanPlayer ));
+        gameController.makeMove(game1, new Move(1,3, humanPlayer));
 
         // g2 move 1 2 X
 
