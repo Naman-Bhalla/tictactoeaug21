@@ -1,10 +1,8 @@
 package com.scaler.tictactoe.controllers;
 
-import com.scaler.tictactoe.factories.player.PlayerFactory;
+import com.scaler.tictactoe.exceptions.EmptyMovesUndoOperationException;
 import com.scaler.tictactoe.models.*;
-import com.scaler.tictactoe.strategies.botplayingstrategies.RandomBotPlayingStrategy;
 import com.scaler.tictactoe.strategies.gamewinningstrategies.GameWinningStrategy;
-import com.scaler.tictactoe.strategies.gamewinningstrategies.OrderOneGameWinningStrategy;
 
 import java.util.List;
 
@@ -14,37 +12,42 @@ import java.util.List;
 // CheckWinner
 // GetCurrentState
 public class GameController {
-    public Game createGame(int dimensionOfBoard,
-                           List<Player> players,
-                           List<GameWinningStrategy> strategies) {
-        Game game = null;
+  public Game createGame(
+      int dimensionOfBoard, List<Player> players, List<GameWinningStrategy> strategies) {
+    Game game = null;
 
-        try {
-            game = Game.create()
-                    .withBoard(new Board(dimensionOfBoard))
-                    .addPlayers(players)
-                    .addGameWinningStrategies(strategies)
-                    .build();
-        } catch (Exception exception) {
-            System.out.println("We did something wrong");
-        }
-
-        return game;
+    try {
+      game =
+          Game.create()
+              .withBoard(new Board(dimensionOfBoard))
+              .addPlayers(players)
+              .addGameWinningStrategies(strategies)
+              .build();
+    } catch (Exception exception) {
+      System.out.println("We did something wrong");
     }
 
-    public MoveResult makeMove(Game game, Move move) {
-        return MoveResult.Failure;
-    }
+    return game;
+  }
 
-    public boolean undo(Game game) {
-        return game.undo();
-    }
+  public MoveResult makeMove(Game game, Move move) {
+    return MoveResult.Failure;
+  }
 
-    public Player getWinner(Game game) {
-        return null;
+  public boolean undo(Game game) {
+    try {
+      return game.undo();
+    } catch (EmptyMovesUndoOperationException e) {
+      System.out.println(e.getMessage());
+      return false;
     }
+  }
 
-    public GameStatus getGameStatus(Game game) {
-        return GameStatus.IN_PROGRESS;
-    }
+  public Player getWinner(Game game) {
+    return null;
+  }
+
+  public GameStatus getGameStatus(Game game) {
+    return GameStatus.IN_PROGRESS;
+  }
 }
