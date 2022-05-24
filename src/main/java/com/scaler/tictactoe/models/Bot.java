@@ -9,4 +9,9 @@ public class Bot extends Player {
         super(PlayerType.BOT, symbol);
         this.botPlayingStrategy = strategy;
     }
+
+    @Override
+    public Move makeMove(Game game) {
+        return botPlayingStrategy.makeNextMove(game, this);
+    }
 }

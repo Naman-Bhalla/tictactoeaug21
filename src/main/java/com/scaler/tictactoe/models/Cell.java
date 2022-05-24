@@ -5,6 +5,12 @@ public class Cell {
     private int column;
     private Symbol symbol;
 
+    public Cell(int row, int column) {
+        this.row = row;
+        this.column = column;
+        this.symbol = Symbol.NULL_SYMBOL;
+    }
+
     public int getRow() {
         return row;
     }
@@ -22,6 +28,11 @@ public class Cell {
     }
 
     public void clearCell() {
-        this.symbol = new Symbol(' ');
+        this.symbol = Symbol.NULL_SYMBOL;
+    }
+
+    @Override
+    public String toString() {
+        return symbol.toString();
     }
 }

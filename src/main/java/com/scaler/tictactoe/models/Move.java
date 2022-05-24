@@ -1,12 +1,18 @@
 package com.scaler.tictactoe.models;
 
 public class Move {
-    private Symbol symbol;
-    private Cell cell;
     private Player player;
+    int row;
+    int column;
 
-    public Cell getCell() {
-        return cell;
+    public Move(Player player, int row, int column) {
+        this.player = player;
+        this.row = row;
+        this.column =column;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
 

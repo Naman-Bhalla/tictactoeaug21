@@ -15,16 +15,17 @@ public class Application {
     public static void main(String[] args) {
         List<Player> players1 = List.of(
                 PlayerFactory.getHuman(new Symbol('X'), new User()),
-                PlayerFactory.getBot(new Symbol('0'), new RandomBotPlayingStrategy())
+                PlayerFactory.getBot(new Symbol('O'), new RandomBotPlayingStrategy())
         );
 
+        Board board = new Board(3);
         List<GameWinningStrategy> gameWinningStrategies1 = List.of(
-                new OrderOneGameWinningStrategy()
+                new OrderOneGameWinningStrategy(board)
         );
 
         Game game1 = gameController.createGame(3, players1, gameWinningStrategies1);
 
-        gameController.makeMove(game1, new Move());
+        GameStatus gameStatus = gameController.startGame(game1);
 
         // g2 move 1 2 X
 
